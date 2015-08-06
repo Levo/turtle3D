@@ -20,6 +20,34 @@ var turtle = new turtle(0.0, 0.0, 1.0);
 var vertices = new Float32Array([
   0.0, 0.0, 0.0,   0.0, 0.0, 1.0,  
 ]);
+
+
+turtle.arbRotate(90, turtle.r, turtle.dir);
+turtle.arbRotate(90, turtle.r, turtle.up);
+turtle.F();
+turtle.arbRotate(90, turtle.r, turtle.dir);
+turtle.arbRotate(90, turtle.r, turtle.up);
+turtle.F();
+turtle.arbRotate(90, turtle.r, turtle.dir);
+turtle.arbRotate(90, turtle.r, turtle.up);
+turtle.F();
+turtle.arbRotate(45, turtle.r, turtle.dir);
+turtle.arbRotate(45, turtle.r, turtle.up);
+turtle.F();
+turtle.arbRotate(45, turtle.r, turtle.dir);
+turtle.arbRotate(45, turtle.r, turtle.up);
+turtle.F();
+turtle.arbRotate(45, turtle.r, turtle.dir);
+turtle.arbRotate(45, turtle.r, turtle.up);
+turtle.F();
+turtle.arbRotate(45, turtle.r, turtle.dir);
+turtle.arbRotate(45, turtle.r, turtle.up);
+turtle.F();
+turtle.arbRotate(45, turtle.r, turtle.dir);
+turtle.arbRotate(45, turtle.r, turtle.up);
+turtle.F();
+turtle.arbRotate(45, turtle.r, turtle.dir);
+turtle.arbRotate(45, turtle.r, turtle.up);
 turtle.F();
 turtle.arbRotate(45, turtle.r, turtle.dir);
 turtle.arbRotate(45, turtle.r, turtle.up);
@@ -28,7 +56,8 @@ turtle.arbRotate(45, turtle.r, turtle.dir);
 turtle.arbRotate(45, turtle.r, turtle.up);
 turtle.F();
 
-var eye = new Vector4(0.0, 2.5, 5.0);
+
+var eye = new Vector4(0.0, 0.0, 2.0);
 var up = new Vector4(0.0, 1.0, 0.0);
 var nUp = new Vector4(0.0, 1.0, 0.0);
 var r = new Vector4(0.0, 0.0, 0.0);
@@ -70,7 +99,7 @@ var VSHADER_SOURCE =
   // Calculate the color due to diffuse reflection
   '  vec3 diffuse = u_LightColor * a_Color.rgb * nDotL;\n' +
   '  vec3 specular =  u_LightColor * a_Color.rgb * (vec3((2.0*nDotL*normal) - lightDirection));\n'+
-  '  v_Color = vec4(a_Position.x,a_Position.y,a_Position.z,1.0);\n' +
+  '  v_Color = vec4(a_Position.x+0.5,a_Position.y+0.5,a_Position.z+0.5,1.0);\n' +
   '}\n';
 
 // Fragment shader program
