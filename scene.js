@@ -21,6 +21,12 @@ var vertices = new Float32Array([
   0.0, 0.0, 0.0,   0.0, 0.0, 1.0,  
 ]);
 turtle.F();
+turtle.arbRotate(45, turtle.r, turtle.dir);
+turtle.arbRotate(45, turtle.r, turtle.up);
+turtle.F();
+turtle.arbRotate(45, turtle.r, turtle.dir);
+turtle.arbRotate(45, turtle.r, turtle.up);
+turtle.F();
 
 var eye = new Vector4(0.0, 2.5, 5.0);
 var up = new Vector4(0.0, 1.0, 0.0);
@@ -64,7 +70,7 @@ var VSHADER_SOURCE =
   // Calculate the color due to diffuse reflection
   '  vec3 diffuse = u_LightColor * a_Color.rgb * nDotL;\n' +
   '  vec3 specular =  u_LightColor * a_Color.rgb * (vec3((2.0*nDotL*normal) - lightDirection));\n'+
-  '  v_Color = vec4(diffuse + ambient + specular, 1.0);\n' +
+  '  v_Color = vec4(a_Position.x,a_Position.y,a_Position.z,1.0);\n' +
   '}\n';
 
 // Fragment shader program
@@ -74,7 +80,7 @@ var FSHADER_SOURCE =
   '#endif\n' +
   'varying vec4 v_Color;\n' +
   'void main() {\n' +
-  '  gl_FragColor = vec4(1.0,1.0,0.0,1.0);\n' +
+  '  gl_FragColor = v_Color;\n' +
   '}\n';
 
 
@@ -178,7 +184,7 @@ function main() {
   */
   modelMatrix = new Matrix4();
   modelMatrix.setTranslate(0,0.0,0);
-  modelMatrix.rotate(-angle, 0, 1, 0);
+  modelMatrix.rotate(angle, 0, 1, 0);
 
   gl.uniformMatrix4fv(u_modelMatrix, false, modelMatrix.elements);
 
