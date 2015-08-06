@@ -114,3 +114,45 @@ turtle.prototype.arbRotate = function(theta, v, out){
 
 	this.out = this.normalize(out);
 }
+
+/*
+	yaw left
+*/
+turtle.prototype.plus = function(){
+
+}
+
+/* 
+	yaw right
+*/
+turtle.prototype.minus = function(){
+
+}
+
+/*
+	pitch up 
+*/
+turtle.prototype.upArrow = function(){
+
+}
+
+/*
+	pitch down
+*/
+turtle.prototype.ampersand = function(){
+
+}
+
+/*
+	roll left
+*/
+turtle.prototype.backslash = function(){
+
+}
+
+/*
+	roll right
+*/
+turtle.prototype.forwardslash = function(){
+
+}
