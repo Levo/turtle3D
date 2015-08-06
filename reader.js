@@ -17,14 +17,15 @@ function reader(){
 			...
 	*/
 	this.productions = {
-		"F":"F&+F-"
+		"F":"",
+		"A":"F"
 	};
 
 	/*
 		Starting equation
 			FB
 	*/
-	this.axiom = "F[F^]F";
+	this.axiom = "A";
 
 	/*
 		A stack structure to keep track of the current state of the turtle
@@ -35,8 +36,15 @@ function reader(){
 	/*
 		The number of iterations for the productions
 	*/
-	this.iterations = 5;
+	this.iterations = 1;
 
+	/*
+		Variables for axiom and production
+	*/
+	this.variables = {
+		"F":true,
+		"A":true
+	};
 
 	/*
 		Temp production
@@ -106,7 +114,7 @@ reader.prototype.draw = function(){
 
 		c = this.finalProduction[i];
 
-		if(c === "F"){
+		if(this.variables[c] === true){
 			turtle.F();
 		}else if(c === "f"){
 			turtle.f();

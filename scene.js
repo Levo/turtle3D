@@ -180,7 +180,7 @@ function main() {
   */
   modelMatrix = new Matrix4();
   modelMatrix.setTranslate(0,0.0,0);
-  modelMatrix.rotate(angle, 0, 1, 0);
+  modelMatrix.rotate(180, 0, 1, 0);
 
   gl.uniformMatrix4fv(u_modelMatrix, false, modelMatrix.elements);
 
@@ -221,6 +221,7 @@ function main() {
 
   gl.drawArrays(gl.LINE_STRIP , 0, n);
 
+
   window.requestAnimationFrame(main);
 }
 
@@ -250,3 +251,14 @@ function initVertexBuffers(gl) {
 
   return n;
 }
+
+/*
+  Redraw scene after camera view changes
+*/
+function draw(){
+
+}
+
+
+
+
