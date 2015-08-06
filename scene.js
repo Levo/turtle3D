@@ -15,49 +15,16 @@ var normalMatrix;
 var canvas;
 var a_Position;
 var rotate = true;
-var turtle = new turtle(0.0, 0.0, 1.0);
+var turtle = new turtle(0.0, 0.0, 0.0);
+var reader = new reader();
 
 var vertices = new Float32Array([
-  0.0, 0.0, 0.0,   0.0, 0.0, 1.0,  
+  0.0, 0.0, 0.0,   0.0, 0.0, 0.0,  
 ]);
 
+reader.decode();
 
-turtle.arbRotate(90, turtle.r, turtle.dir);
-turtle.arbRotate(90, turtle.r, turtle.up);
-turtle.F();
-turtle.arbRotate(90, turtle.r, turtle.dir);
-turtle.arbRotate(90, turtle.r, turtle.up);
-turtle.F();
-turtle.arbRotate(90, turtle.r, turtle.dir);
-turtle.arbRotate(90, turtle.r, turtle.up);
-turtle.F();
-turtle.arbRotate(45, turtle.r, turtle.dir);
-turtle.arbRotate(45, turtle.r, turtle.up);
-turtle.F();
-turtle.arbRotate(45, turtle.r, turtle.dir);
-turtle.arbRotate(45, turtle.r, turtle.up);
-turtle.F();
-turtle.arbRotate(45, turtle.r, turtle.dir);
-turtle.arbRotate(45, turtle.r, turtle.up);
-turtle.F();
-turtle.arbRotate(45, turtle.r, turtle.dir);
-turtle.arbRotate(45, turtle.r, turtle.up);
-turtle.F();
-turtle.arbRotate(45, turtle.r, turtle.dir);
-turtle.arbRotate(45, turtle.r, turtle.up);
-turtle.F();
-turtle.arbRotate(45, turtle.r, turtle.dir);
-turtle.arbRotate(45, turtle.r, turtle.up);
-turtle.F();
-turtle.arbRotate(45, turtle.r, turtle.dir);
-turtle.arbRotate(45, turtle.r, turtle.up);
-turtle.F();
-turtle.arbRotate(45, turtle.r, turtle.dir);
-turtle.arbRotate(45, turtle.r, turtle.up);
-turtle.F();
-
-
-var eye = new Vector4(0.0, 0.0, 2.0);
+var eye = new Vector4(0.0, 2.5, 2.0);
 var up = new Vector4(0.0, 1.0, 0.0);
 var nUp = new Vector4(0.0, 1.0, 0.0);
 var r = new Vector4(0.0, 0.0, 0.0);

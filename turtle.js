@@ -17,7 +17,7 @@ turtle.prototype.debug = function(){
 	Moves the turtle one unit without drawing a line
 */
 turtle.prototype.f = function(){
-
+	// TODO
 	this.pos.x += this.unit * this.dir.x;
 	this.pos.y += this.unit * this.dir.y;
 	this.pos.z += this.unit * this.dir.z;
@@ -119,40 +119,51 @@ turtle.prototype.arbRotate = function(theta, v, out){
 	yaw left
 */
 turtle.prototype.plus = function(){
-
+	this.arbRotate(this.angle, this.up, this.dir);
+	this.arbRotate(this.angle, this.up, this.r);
 }
 
 /* 
-	yaw right
+	yaw right	
 */
 turtle.prototype.minus = function(){
-
+	this.arbRotate(-this.angle, this.up, this.dir);
+	this.arbRotate(-this.angle, this.up, this.r);
 }
 
 /*
 	pitch up 
 */
 turtle.prototype.upArrow = function(){
-
+	this.arbRotate(this.angle, this.r, this.dir);
+	this.arbRotate(this.angle, this.r, this.up);
 }
 
 /*
 	pitch down
 */
 turtle.prototype.ampersand = function(){
-
+	this.arbRotate(-this.angle, this.r, this.dir);
+	this.arbRotate(-this.angle, this.r, this.up);
 }
 
 /*
 	roll left
 */
 turtle.prototype.backslash = function(){
-
+	this.arbRotate(-this.angle, this.dir, this.up);
+	this.arbRotate(-this.angle, this.dir, this.r);
 }
 
 /*
 	roll right
 */
 turtle.prototype.forwardslash = function(){
-
+	this.arbRotate(this.angle, this.dir, this.up);
+	this.arbRotate(this.angle, this.dir, this.r);
 }
+
+
+
+
+
