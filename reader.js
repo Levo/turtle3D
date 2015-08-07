@@ -17,7 +17,8 @@ function reader(){
 			...
 	*/
 	this.productions = {
-		 
+		"A":"-BF+AFA+FB-",
+		"B":"+AF-BFB-FA+",
 		"X":" ^\\XF^\\XFX-F^//XFX&F+//XFX-F/X-/ ",
 	};
 

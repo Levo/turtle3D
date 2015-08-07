@@ -64,6 +64,24 @@ turtle.prototype.pushVert = function(x,y,z){
 	tempVertices[length + 2] = z;
 
 	vertices = tempVertices;
+
+	var rR  = (Math.random()*1 )+0;
+	var rG  = (Math.random()*1 )+0;
+	var rB  = (Math.random()*1 )+0;
+
+	var tempColors = new Float32Array(colors.length + 3);
+	for (var i = 0; i < colors.length; i++) {
+		tempColors[i] = colors[i];
+	};
+
+	var colorLength = colors.length;
+
+	tempColors[colorLength] = rR;
+	tempColors[colorLength + 1] = rG;
+	tempColors[colorLength + 2] = rB;
+
+	colors = tempColors;
+
 }
 
 

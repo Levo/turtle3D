@@ -22,6 +22,9 @@ var vertices = new Float32Array([
   0.0, 0.0, 0.0,   0.0, 0.0, 0.0,  
 ]);
 
+var colors = new Float32Array([
+  0.0, 0.0, 0.0,   0.0, 0.0, 0.0,  
+]);
 reader.decode();
 
 var eye = new Vector4(0.0, 5.0, 25.0);
@@ -66,7 +69,7 @@ var VSHADER_SOURCE =
   // Calculate the color due to diffuse reflection
   '  vec3 diffuse = u_LightColor * a_Color.rgb * nDotL;\n' +
   '  vec3 specular =  u_LightColor * a_Color.rgb * (vec3((2.0*nDotL*normal) - lightDirection));\n'+
-  '  v_Color = vec4(1.0,0.0,0.0,1.0);\n' +
+  '  v_Color = a_Color;\n' +
   '}\n';
 
 // Fragment shader program
@@ -151,15 +154,77 @@ function setModelMatrix(mat, matIn){
 var angle = 0.0;
 
 function main() {
-  if(rotate){
-    angle += 1.0;
-  }
+
   // Retrieve <canvas> element
   canvas = document.getElementById('webgl');
 
   gl = getWebGLContext(canvas);
 
   initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)
+
+  initArrayBuffer(gl, colors, 3, 'a_Color');
+
+  draw();
+
+}
+
+function initArrayBuffer (gl, data, num, attribute) {
+  // Create a buffer object
+  var buffer = gl.createBuffer();
+  if (!buffer) {
+    console.log('Failed to create the buffer object');
+    return false;
+  }
+  // Write date into the buffer object
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+  // Assign the buffer object to the attribute variable
+  var a_attribute = gl.getAttribLocation(gl.program, attribute);
+  if (a_attribute < 0) {
+    console.log('Failed to get the storage location of ' + attribute);
+    return false;
+  }
+  gl.vertexAttribPointer(a_attribute, 3, gl.FLOAT, false, 0, 0);
+  // Enable the assignment of the buffer object to the attribute variable
+  gl.enableVertexAttribArray(a_attribute);
+
+  return true;
+}
+
+
+
+function initVertexBuffers(gl) {
+
+  var n = vertices.length/3; // The number of vertices
+
+  // Create a buffer object
+  var vertexBuffer = gl.createBuffer();
+  if (!vertexBuffer) {
+    console.log('Failed to create the buffer object');
+    return -1;
+  }
+
+  // Bind the buffer object to target
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+  // Write date into the buffer object
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+　// Assign the buffer object to a_Position variable
+  gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
+
+  // Enable the assignment to a_Position variable
+  gl.enableVertexAttribArray(a_Position);
+
+  return n;
+}
+
+/*
+  Redraw scene after camera view changes
+*/
+function draw(){
+  if(rotate){
+    angle += 1.0;
+  }
 
   n = initVertexBuffers(gl);
 
@@ -176,6 +241,8 @@ function main() {
   u_normalMatrix = gl.getUniformLocation(gl.program, 'u_normalMatrix');
 
   a_Position = gl.getAttribLocation(gl.program, 'a_Position');
+
+
   /*
     Set the model matrix
   */
@@ -223,41 +290,7 @@ function main() {
   gl.drawArrays(gl.LINE_STRIP , 0, n);
 
 
-  window.requestAnimationFrame(main);
-}
-
-
-
-function initVertexBuffers(gl) {
-
-  var n = vertices.length/3; // The number of vertices
-
-  // Create a buffer object
-  var vertexBuffer = gl.createBuffer();
-  if (!vertexBuffer) {
-    console.log('Failed to create the buffer object');
-    return -1;
-  }
-
-  // Bind the buffer object to target
-  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-  // Write date into the buffer object
-  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-
-　// Assign the buffer object to a_Position variable
-  gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
-
-  // Enable the assignment to a_Position variable
-  gl.enableVertexAttribArray(a_Position);
-
-  return n;
-}
-
-/*
-  Redraw scene after camera view changes
-*/
-function draw(){
-
+  window.requestAnimationFrame(draw);
 }
 
 
