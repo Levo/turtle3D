@@ -163,7 +163,13 @@ turtle.prototype.forwardslash = function(){
 	this.arbRotate(this.angle, this.dir, this.r);
 }
 
-
+/*
+	turn around
+*/
+turtle.prototype.verticalbar = function(){
+	this.arbRotate(180, this.up, this.dir);
+	this.arbRotate(180, this.up, this.r);
+}
 
 
 

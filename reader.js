@@ -8,7 +8,7 @@ function reader(){
 	/*
 		Possble symbols to be used with the productions and axiom
 	*/
-	this.symbols = ["F","f","+","-","[","]","^","&","\\","/"];
+	this.symbols = ["F","f","+","-","[","]","^","&","\\","/","|"];
 
 	/*
 		a set of production stream
@@ -17,15 +17,17 @@ function reader(){
 			...
 	*/
 	this.productions = {
-		"F":"F&",
-		"A":"-FF+^",
+		"A":"B-F+CFC+F-D&F∧D-F+&&CFC+F+B//",
+		"B":"A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//",
+		"C":"|D^|F^B-F+C^F^A&&FA&F^C+F+B^F∧D//",
+		"D":"|CFB-F+B|FA&F^A&&FB-F+B|FC//",
 	};
 
 	/*
 		Starting equation
 			FB ...
 	*/
-	this.axiom = "FAF";
+	this.axiom = "A";
 
 	/*
 		A stack structure to keep track of the current state of the turtle
@@ -36,15 +38,14 @@ function reader(){
 	/*
 		The number of iterations for the productions
 	*/
-	this.iterations = 6;
+	this.iterations = 2;
 
 	/*
 		Variables for axiom and production
 			Only add if you want them to be considered as F ... which means move forward
 	*/
 	this.variables = {
-		"F":true,
-		"A":true,
+		"F":true,		
 	};
 
 	/*
@@ -64,7 +65,10 @@ function reader(){
 				If FFGFF, it would only read the F
 	*/
 	this.ignoreSymbols = {
-		"G":true,
+		"A":true,
+		"B":true,
+		"C":true,
+		"D":true		
 	};
 
 
@@ -77,9 +81,7 @@ reader.prototype.decode = function(){
 			Just perform the axiom
 	*/
 	if(this.iterations === 0){
-		for (var i = 0; i < this.axiom.length; i++) {
-			this.finalProduction[i] = this.axiom[i];
-		};
+		this.finalProduction = this.axiom;
 	}else{
 		this.tempProduction = this.axiom;
 
@@ -192,6 +194,8 @@ reader.prototype.draw = function(){
 				turtle.backslash();
 			}else if(c === "/"){
 				turtle.forwardslash();
+			}else if(c === "|"){
+				turtle.verticalbar();
 			}
 		}
 
