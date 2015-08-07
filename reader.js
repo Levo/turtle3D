@@ -3,7 +3,7 @@ function reader(){
 	/*
 		Angle for the turtle to use
 	*/
-	this.angle = 90;
+	this.angle = 25.7;
 
 	/*
 		Possble symbols to be used with the productions and axiom
@@ -17,9 +17,11 @@ function reader(){
 			...
 	*/
 	this.productions = {
-		"A":"-BF+AFA+FB-",
-		"B":"+AF-BFB-FA+",
-		"X":" ^\\XF^\\XFX-F^//XFX&F+//XFX-F/X-/ ",
+		// "A":"-BF+AFA+FB-",
+		// "B":"+AF-BFB-FA+",
+		"X":"F[+X][-X]FX",
+		"F":"FF"
+		// "X":" ^\\XF^\\XFX-F^//XFX&F+//XFX-F/X-/ ",
 	};
 
 	/*
@@ -37,14 +39,15 @@ function reader(){
 	/*
 		The number of iterations for the productions
 	*/
-	this.iterations = 4;
+	this.iterations = 7;
 
 	/*
 		Variables for axiom and production
 			Only add if you want them to be considered as F ... which means move forward
 	*/
 	this.variables = {
-		"F":true,		
+		"F":true,
+
 	};
 
 	/*
@@ -164,7 +167,7 @@ reader.prototype.draw = function(){
 					}
 				};
 				this.stack.push(temp);
-				turtle.plus();
+				// turtle.plus();
 			}else if(c === "]"){
 
 				var temp = this.stack.pop();
@@ -185,7 +188,7 @@ reader.prototype.draw = function(){
 				turtle.r.y = temp.r.y;
 				turtle.r.z = temp.r.z;
 
-				turtle.minus();
+				// turtle.minus();
 
 			}else if(c === "^"){
 				turtle.upArrow();
