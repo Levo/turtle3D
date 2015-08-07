@@ -166,6 +166,7 @@ function main() {
   gl.clearColor(0, 0, 0, 1);  
   gl.enable(gl.DEPTH_TEST);
 
+
   u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
   u_ProjMatrix = gl.getUniformLocation(gl.program, 'u_ProjMatrix');
   u_LightColor = gl.getUniformLocation(gl.program, 'u_LightColor');
@@ -180,7 +181,7 @@ function main() {
   */
   modelMatrix = new Matrix4();
   modelMatrix.setTranslate(0,0.0,0);
-  modelMatrix.rotate(180, 0, 1, 0);
+  modelMatrix.rotate(angle, 0, 1, 0);
 
   gl.uniformMatrix4fv(u_modelMatrix, false, modelMatrix.elements);
 

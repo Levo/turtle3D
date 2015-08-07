@@ -17,15 +17,15 @@ function reader(){
 			...
 	*/
 	this.productions = {
-		"F":"",
-		"A":"F"
+		"F":"F&",
+		"A":"-FF+^",
 	};
 
 	/*
 		Starting equation
-			FB
+			FB ...
 	*/
-	this.axiom = "A";
+	this.axiom = "FAF";
 
 	/*
 		A stack structure to keep track of the current state of the turtle
@@ -36,25 +36,36 @@ function reader(){
 	/*
 		The number of iterations for the productions
 	*/
-	this.iterations = 1;
+	this.iterations = 6;
 
 	/*
 		Variables for axiom and production
+			Only add if you want them to be considered as F ... which means move forward
 	*/
 	this.variables = {
 		"F":true,
-		"A":true
+		"A":true,
 	};
 
 	/*
-		Temp production
+		Temp production used in iterations of the production
 	*/
 	this.tempProduction = "";
 
 	/*
 		The stream of commands after iterations
+		The turtle will perform these commands
 	*/
 	this.finalProduction = "";
+
+	/*
+		Symbols to ignore in production
+			"G : true"...
+				If FFGFF, it would only read the F
+	*/
+	this.ignoreSymbols = {
+		"G":true,
+	};
 
 
 }
@@ -114,70 +125,74 @@ reader.prototype.draw = function(){
 
 		c = this.finalProduction[i];
 
-		if(this.variables[c] === true){
-			turtle.F();
-		}else if(c === "f"){
-			turtle.f();
-		}else if(c === "+"){
-			turtle.plus();
-		}else if(c === "-"){
-			turtle.minus();
-		}else if(c === "["){
-			var temp = {
-				pos: {
-					x: turtle.pos.x,
-					y: turtle.pos.y,
-					z: turtle.pos.z
-				},
-				dir: {
-					x: turtle.dir.x,
-					y: turtle.dir.y,
-					z: turtle.dir.z
-				},
-				up: {
-					x: turtle.up.x,
-					y: turtle.up.y,
-					z: turtle.up.z
-				},
-				r: {
-					x: turtle.r.x,
-					y: turtle.r.y,
-					z: turtle.r.z
-				}
-			};
+		if(!this.ignoreSymbols[c]){
 
-			this.stack.push(temp);
-			turtle.plus();
-		}else if(c === "]"){
+			if(this.variables[c] === true){
+				turtle.F();
+				console.log("hi");
+			}else if(c === "f"){
+				turtle.f();
+			}else if(c === "+"){
+				turtle.plus();
+			}else if(c === "-"){
+				turtle.minus();
+			}else if(c === "["){
+				var temp = {
+					pos: {
+						x: turtle.pos.x,
+						y: turtle.pos.y,
+						z: turtle.pos.z
+					},
+					dir: {
+						x: turtle.dir.x,
+						y: turtle.dir.y,
+						z: turtle.dir.z
+					},
+					up: {
+						x: turtle.up.x,
+						y: turtle.up.y,
+						z: turtle.up.z
+					},
+					r: {
+						x: turtle.r.x,
+						y: turtle.r.y,
+						z: turtle.r.z
+					}
+				};
 
-			var temp = this.stack.pop();
+				this.stack.push(temp);
+				turtle.plus();
+			}else if(c === "]"){
 
-			turtle.pos.x = temp.pos.x;
-			turtle.pos.y = temp.pos.y;
-			turtle.pos.z = temp.pos.z;
+				var temp = this.stack.pop();
 
-			turtle.dir.x = temp.dir.x;
-			turtle.dir.y = temp.dir.y;
-			turtle.dir.z = temp.dir.z;
+				turtle.pos.x = temp.pos.x;
+				turtle.pos.y = temp.pos.y;
+				turtle.pos.z = temp.pos.z;
 
-			turtle.up.x = temp.up.x;
-			turtle.up.y = temp.up.y;
-			turtle.up.z = temp.up.z;
+				turtle.dir.x = temp.dir.x;
+				turtle.dir.y = temp.dir.y;
+				turtle.dir.z = temp.dir.z;
 
-			turtle.r.x = temp.r.x;
-			turtle.r.y = temp.r.y;
-			turtle.r.z = temp.r.z;
+				turtle.up.x = temp.up.x;
+				turtle.up.y = temp.up.y;
+				turtle.up.z = temp.up.z;
 
-			turtle.minus();
+				turtle.r.x = temp.r.x;
+				turtle.r.y = temp.r.y;
+				turtle.r.z = temp.r.z;
 
-		}else if(c === "^"){
-			turtle.upArrow();
-		}else if(c === "&"){
-			turtle.ampersand();
-		}else if(c === "\\"){
-			turtle.backslash();
-		}else if(c === "/"){
-			turtle.forwardslash();
+				turtle.minus();
+
+			}else if(c === "^"){
+				turtle.upArrow();
+			}else if(c === "&"){
+				turtle.ampersand();
+			}else if(c === "\\"){
+				turtle.backslash();
+			}else if(c === "/"){
+				turtle.forwardslash();
+			}
 		}
 
 	};
