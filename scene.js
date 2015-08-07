@@ -24,11 +24,11 @@ var vertices = new Float32Array([
 
 reader.decode();
 
-var eye = new Vector4(0.0, 2.5, 2.0);
+var eye = new Vector4(0.0, 5.0, 25.0);
 var up = new Vector4(0.0, 1.0, 0.0);
 var nUp = new Vector4(0.0, 1.0, 0.0);
 var r = new Vector4(0.0, 0.0, 0.0);
-var at = new Vector4(0.0, 0.0, 0.0);
+var at = new Vector4(0.0, 5.0, 0.0);
 var view = new Vector4(0.0, 0.0, 0.0);
 
 var frustum = {
@@ -66,7 +66,7 @@ var VSHADER_SOURCE =
   // Calculate the color due to diffuse reflection
   '  vec3 diffuse = u_LightColor * a_Color.rgb * nDotL;\n' +
   '  vec3 specular =  u_LightColor * a_Color.rgb * (vec3((2.0*nDotL*normal) - lightDirection));\n'+
-  '  v_Color = vec4(a_Position.x+0.5,a_Position.y+0.5,a_Position.z+0.5,1.0);\n' +
+  '  v_Color = vec4(1.0,0.0,0.0,1.0);\n' +
   '}\n';
 
 // Fragment shader program
@@ -181,7 +181,7 @@ function main() {
   */
   modelMatrix = new Matrix4();
   modelMatrix.setTranslate(0,0.0,0);
-  modelMatrix.rotate(209, 0, 1, 0);
+  modelMatrix.rotate(angle, 0, 1, 0);
 
   gl.uniformMatrix4fv(u_modelMatrix, false, modelMatrix.elements);
 
