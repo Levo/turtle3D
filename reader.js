@@ -17,10 +17,12 @@ function reader(){
 			...
 	*/
 	this.productions = {
-		"A":"B-F+CFC+F-D&F∧D-F+&&CFC+F+B//",
-		"B":"A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//",
-		"C":"|D^|F^B-F+C^F^A&&FA&F^C+F+B^F∧D//",
-		"D":"|CFB-F+B|FA&F^A&&FB-F+B|FC//",
+		"A":"-BF+AFA+FB-",
+		"B":"+AF-BFB-FA+"
+		// "A":"B-F+CFC+F-D&F∧D-F+&&CFC+F+B//",
+		// "B":"A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//",
+		// "C":"|D^|F^B-F+C^F^A&&FA&F^C+F+B^F∧D//",
+		// "D":"|CFB-F+B|FA&F^A&&FB-F+B|FC//",
 	};
 
 	/*
@@ -38,7 +40,7 @@ function reader(){
 	/*
 		The number of iterations for the productions
 	*/
-	this.iterations = 2;
+	this.iterations = 3;
 
 	/*
 		Variables for axiom and production
@@ -66,9 +68,7 @@ function reader(){
 	*/
 	this.ignoreSymbols = {
 		"A":true,
-		"B":true,
-		"C":true,
-		"D":true		
+		"B":true,	
 	};
 
 
@@ -100,9 +100,12 @@ reader.prototype.decode = function(){
 			};
 
 			this.tempProduction = this.finalProduction;
+			this.finalProduction = "";
 		};
 
 	}
+
+	this.finalProduction = this.tempProduction;
 
 	/*
 		Make the turtle move!
@@ -131,12 +134,12 @@ reader.prototype.draw = function(){
 
 			if(this.variables[c] === true){
 				turtle.F();
-				console.log("hi");
 			}else if(c === "f"){
 				turtle.f();
 			}else if(c === "+"){
 				turtle.plus();
 			}else if(c === "-"){
+				console.log("hi");
 				turtle.minus();
 			}else if(c === "["){
 				var temp = {
@@ -161,7 +164,6 @@ reader.prototype.draw = function(){
 						z: turtle.r.z
 					}
 				};
-
 				this.stack.push(temp);
 				turtle.plus();
 			}else if(c === "]"){

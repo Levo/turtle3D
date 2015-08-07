@@ -181,7 +181,7 @@ function main() {
   */
   modelMatrix = new Matrix4();
   modelMatrix.setTranslate(0,0.0,0);
-  modelMatrix.rotate(angle, 0, 1, 0);
+  modelMatrix.rotate(209, 0, 1, 0);
 
   gl.uniformMatrix4fv(u_modelMatrix, false, modelMatrix.elements);
 
