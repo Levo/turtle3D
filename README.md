@@ -6,3 +6,5 @@ With this project I wanted to clean up my code from the 2D version because the d
 The decoder in this project is a whole lot cleaner and more generalized so I can have many variables and rules to create these systems. 
 
 I hope to expand this code and create plants with this 3D system. 
+
+To move the camera its the same as plane controls. W,S to move forward. A,D to roll. Up arrow, Down arrow to pitch.
