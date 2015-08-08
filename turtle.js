@@ -4,7 +4,7 @@ function turtle(x,y,z){
 	this.up  = {x: 0, y: 1, z: 0};
 	this.r  =  {x:-1, y: 0, z: 0};
 	this.unit = 1.0;
-	this.angle = 25.7;
+	this.angle = 90;
 	this.rad = Math.PI/180;
 }
 
@@ -130,7 +130,7 @@ turtle.prototype.arbRotate = function(theta, v, out){
 	out.y = B * oX + E * oY + H * oZ; 
 	out.z = C * oX + F * oY + I * oZ;
 
-	this.out = this.normalize(out);
+	out = this.normalize(out);
 }
 
 /*

@@ -15,6 +15,8 @@ var normalMatrix;
 var canvas;
 var a_Position;
 var rotate = true;
+
+
 var turtle = new turtle(0.0, 0.0, 0.0);
 var reader = new reader();
 
@@ -27,11 +29,11 @@ var colors = new Float32Array([
 ]);
 reader.decode();
 
-var eye = new Vector4(0.0, 5.0, 75.0);
+var eye = new Vector4(0.0, -.5, -5);
 var up = new Vector4(0.0, 1.0, 0.0);
 var nUp = new Vector4(0.0, 1.0, 0.0);
 var r = new Vector4(0.0, 0.0, 0.0);
-var at = new Vector4(0.0, 5.0, 0.0);
+var at = new Vector4(0.0, 0.0, 0.0);
 var view = new Vector4(0.0, 0.0, 0.0);
 
 var frustum = {
@@ -56,7 +58,7 @@ var VSHADER_SOURCE =
   'uniform vec3 u_lightPosition;\n'+   // Light position
   'uniform vec3 u_LightDirection;\n' + // Light direction (in the world coordinate, normalized)
   'varying vec4 v_Color;\n' +
-  'uniform vec3 u_AmbientLight;\n' + // Ambient light  
+  'uniform vec3 u_AmbientLight;\n' + // Ambient light
   'void main() {\n' +
   '  vec4 vertexPosition = u_modelMatrix * a_Position;\n' +
   '  vec3 lightDirection = normalize(u_lightPosition - vec3(vertexPosition));\n'+
@@ -96,6 +98,7 @@ function calculateView(){
 function calculateR(){
 
   up.normalize();
+  view.normalize();
   r.cross(view,up);
 
 }
@@ -115,8 +118,7 @@ function setViewMatrix(mat){
   mat.elements[2] = -view.e.x;  mat.elements[6] = -view.e.y;  mat.elements[10] = -view.e.z;  mat.elements[14] = 0;
   mat.elements[3] = 0;  mat.elements[7] = 0;  mat.elements[11] = 0;  mat.elements[15] = 1;
   // Translate eye to the origin
-  mat.translate(-eye.e.x, -eye.e.y, -eye.e.z);
-
+ 
 }
 
 function setProjMatrix(mat){
@@ -163,6 +165,10 @@ function main() {
   initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)
 
   initArrayBuffer(gl, colors, 3, 'a_Color');
+
+  calculateView();
+  calculateR();
+  calculateUp();
 
   draw();
 
@@ -226,6 +232,8 @@ function draw(){
     angle += 1.0;
   }
 
+
+
   n = initVertexBuffers(gl);
 
   gl.clearColor(0, 0, 0, 1);  
@@ -240,6 +248,7 @@ function draw(){
   u_modelMatrix = gl.getUniformLocation(gl.program, 'u_modelMatrix');
   u_normalMatrix = gl.getUniformLocation(gl.program, 'u_normalMatrix');
 
+
   a_Position = gl.getAttribLocation(gl.program, 'a_Position');
 
 
@@ -247,9 +256,8 @@ function draw(){
     Set the model matrix
   */
   modelMatrix = new Matrix4();
-  modelMatrix.setTranslate(0,-125,0);
-  modelMatrix.rotate(182, 0, 1, 0);
-  modelMatrix.rotate(-90, 1, 0, 0);
+  modelMatrix.setTranslate(0,0,0);
+  modelMatrix.rotate(316, 0, 1, 0);
 
   gl.uniformMatrix4fv(u_modelMatrix, false, modelMatrix.elements);
 
@@ -271,15 +279,19 @@ function draw(){
   viewMatrix = new Matrix4();
   projMatrix = new Matrix4();
 
-  calculateView();
-  calculateR();
-  calculateUp();
+
+
+  view.normalize();
 
   // Set the view matrix
   setViewMatrix(viewMatrix);
+  viewMatrix.translate(-eye.e.x, -eye.e.y, -eye.e.z);
+
 
   // Set the proj matrix
   setProjMatrix(projMatrix);
+
+
 
   // Pass the view matrix
   gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);

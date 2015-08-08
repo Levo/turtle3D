@@ -1,6 +1,7 @@
 function Vector4 (X,Y,Z) {
 	// Defaults to a vector.
 	this.e = {x: X, y: Y, z: Z, w: 1.0};
+	this.rad = Math.PI/180;
 }
 
 Vector4.prototype.set = function(x,y,z,w) {
@@ -36,11 +37,11 @@ Vector4.prototype.invert = function(){
 }
 
 Vector4.prototype.normalize = function(){
-	var magnitude = 1/(Math.sqrt( this.e.x * this.e.x + this.e.y * this.e.y + this.e.z * this.e.z) )
+	var magnitude = (Math.sqrt( (this.e.x * this.e.x) + (this.e.y * this.e.y) + (this.e.z * this.e.z)) )
 	
-	this.e.x *= magnitude;
-	this.e.y *= magnitude;
-	this.e.z *= magnitude;
+	this.e.x /= magnitude;
+	this.e.y /= magnitude;
+	this.e.z /= magnitude;
 }
 
 Vector4.prototype.vAdd = function(vec){
@@ -113,9 +114,9 @@ Vector4.prototype.toVector = function(){
 
 Vector4.prototype.cross = function(vec1, vec2){
 
-	this.e.x = vec1.e.y * vec2.e.z - vec1.e.z * vec2.e.y;
-	this.e.y = vec1.e.z * vec2.e.x - vec1.e.x * vec2.e.z;
-	this.e.z = vec1.e.x * vec2.e.y - vec1.e.y * vec2.e.x;
+	this.e.x = (vec1.e.y * vec2.e.z) - (vec1.e.z * vec2.e.y);
+	this.e.y = (vec1.e.z * vec2.e.x) - (vec1.e.x * vec2.e.z);
+	this.e.z = (vec1.e.x * vec2.e.y) - (vec1.e.y * vec2.e.x);
 	this.normalize();
 }
 
@@ -127,7 +128,7 @@ Vector4.prototype.xyRot = function(angle){
 
 }
 
-Vector4.prototype.arbRotate = function(theta, v, out){
+Vector4.prototype.arbRotate = function(theta, v){
 
 	v.normalize();
 
@@ -136,18 +137,18 @@ Vector4.prototype.arbRotate = function(theta, v, out){
 
 	var oneMc = (1-c);
 
-    var xx  =  v.x * v.x;
-    var xy  =  v.x * v.y;
-    var z   =  v.z;
-    var xz  =  v.x * v.z;
-    var y   =  v.y;
+    var xx  =  v.e.x * v.e.x;
+    var xy  =  v.e.x * v.e.y;
+    var z   =  v.e.z;
+    var xz  =  v.e.x * v.e.z;
+    var y   =  v.e.y;
     var yx  =  xy;
-    var yy  =  v.y * v.y;
-    var yz  =  v.y * v.z;
-    var x   =  v.x;
+    var yy  =  v.e.y * v.e.y;
+    var yz  =  v.e.y * v.e.z;
+    var x   =  v.e.x;
     var zx  =  xz;
     var zy  =  yz;
-    var zz  =  v.z * v.z;
+    var zz  =  v.e.z * v.e.z;
 
     var A = c + xx * oneMc;
     var B = yx * oneMc + z * s;
@@ -159,13 +160,13 @@ Vector4.prototype.arbRotate = function(theta, v, out){
     var H = yz * oneMc - x * s;
     var I = c + zz * oneMc;
 
-    var oX = out.x;
-    var oY = out.y;
-    var oZ = out.z;
+    var oX = this.e.x;
+    var oY = this.e.y;
+    var oZ = this.e.z;
 
-	out.x = A * oX + D * oY + G * oZ; 
-	out.y = B * oX + E * oY + H * oZ; 
-	out.z = C * oX + F * oY + I * oZ;
+	this.e.x = A * oX + D * oY + G * oZ; 
+	this.e.y = B * oX + E * oY + H * oZ; 
+	this.e.z = C * oX + F * oY + I * oZ;
 
-	out.normalize();
+	this.normalize();
 }
