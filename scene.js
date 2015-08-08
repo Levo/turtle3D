@@ -292,7 +292,6 @@ function draw(){
   setProjMatrix(projMatrix);
 
 
-
   // Pass the view matrix
   gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
 
